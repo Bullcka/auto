@@ -29,7 +29,7 @@ public class ProductReturnServiceTest {
     @Test
     void shouldAddProductReturn() {
         //given
-        Order order = new Order(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), 10, 1000);
+        Order order = new Order(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), 10, 10);
 
         //when
         productReturnService.add(order, 10);
@@ -47,7 +47,7 @@ public class ProductReturnServiceTest {
     @Test
     public void shouldFindAllProductReturn() {
         //given
-        List<ProductReturn> productReturns = List.of(new ProductReturn(UUID.randomUUID(), UUID.randomUUID(), LocalDate.now(), 3));
+        List<ProductReturn> productReturns = List.of(new ProductReturn(UUID.randomUUID(), UUID.randomUUID(), LocalDate.now(), 10));
 
         when(repository.findAll()).thenReturn(productReturns);
 
@@ -62,7 +62,7 @@ public class ProductReturnServiceTest {
     void shouldGetProductReturn() {
         //given
         UUID id = UUID.randomUUID();
-        ProductReturn productReturn = new ProductReturn(UUID.randomUUID(), UUID.randomUUID(), LocalDate.now(), 3);
+        ProductReturn productReturn = new ProductReturn(UUID.randomUUID(), UUID.randomUUID(), LocalDate.now(), 10);
 
         when(repository.findById(id)).thenReturn(Optional.of(productReturn));
 
