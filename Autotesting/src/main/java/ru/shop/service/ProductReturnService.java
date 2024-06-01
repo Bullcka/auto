@@ -16,22 +16,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductReturnService {
     private final ProductReturnRepository repository;
-    private final OrderService orderService;
-
-    public void add(Order order, int count) {
-        Order initialOrder = orderService.getById(order.getId());
-        if (initialOrder.getCount() < count) {
-            throw new BadProductReturnCountException();
-        }
-        ProductReturn productReturn = new ProductReturn(UUID.randomUUID(),order.getId(), LocalDate.now(),count);
-        repository.save(productReturn);
-    }
-
     public List<ProductReturn> findAll() {
         return repository.findAll();
     }
 
     public ProductReturn findById(UUID id) {
         return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void add(Order order, Long count) {
+        if (count > order.getCount()) {
+            throw new BadProductReturnCountException();
+        }
+        ProductReturn productReturn = new ProductReturn(UUID.randomUUID(), order.getId(), LocalDate.now(), count);
+        repository.save(productReturn);
     }
 }
